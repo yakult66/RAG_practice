@@ -1,0 +1,4 @@
+[
+  {"question": "請問我今天吃了什麼?", "expected_source": "sample.txt", "expected_text": "蘋果"},
+  {"question": "今天天氣如何?", "expected_source": "sample.txt", "expected_text": "天氣很好"}
+]

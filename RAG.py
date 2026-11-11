@@ -1,17 +1,26 @@
-from Embedding import Embedding
+from Embedding import DOCS_DIR, HISTORY_TURNS, Embedding
 
 rag = Embedding()
 
 print("檢查索引中...")
-if rag.index_file("sample.txt"):
-    print("索引已更新！")
-else:
-    print("檔案沒有變更，沿用既有索引。")
+rag.index_folder(DOCS_DIR)
 
+history = []
 while True:
-    q = input("\n請輸入問題（輸入 q 離開）：")
-    if q.strip().lower() == "q":
+    q = input("\n請輸入問題（輸入 q 離開，輸入 r 清除對話紀錄）：").strip()
+    if q.lower() == "q":
         break
-    if not q.strip():
+    if q.lower() == "r":
+        history.clear()
+        print("已清除對話紀錄。")
         continue
-    print(rag.answer(q, verbose=False))
+    if not q:
+        continue
+    try:
+        a = rag.answer(q, history=history)
+    except RuntimeError as e:
+        print(e)
+        continue
+    print(a)
+    history.append((q, Embedding.strip_sources(a)))
+    del history[:-HISTORY_TURNS]

@@ -17,7 +17,7 @@ file_search_store = client.file_search_stores.create(
 )
 
 operation = client.file_search_stores.upload_to_file_search_store(
-file='sample.txt',
+file='docs/sample.txt',
 file_search_store_name=file_search_store.name,
 config={
     'display_name' : 'display-file-name',
